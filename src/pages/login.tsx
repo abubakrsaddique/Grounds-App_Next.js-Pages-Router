@@ -38,11 +38,10 @@ const Login = () => {
                   </span>
                 </Link>
               </p>
-              <button type="submit" className="mt-4">
-                <div className="relative z-[100] flex h-14 cursor-pointer items-center justify-center overflow-hidden rounded-3xl font-medium text-primary w-full bg-darkbrown text-base hover:bg-lightgreen mob:w-[350px]">
-                  <span className="relative z-10">Login</span>
-                </div>
-              </button>
+
+              <Button variant="secondary" size="sm" className="mt-4">
+                Login
+              </Button>
             </form>
           </div>
           <div className="absolute left-8 top-8 mob:hidden flex tab:hidden">

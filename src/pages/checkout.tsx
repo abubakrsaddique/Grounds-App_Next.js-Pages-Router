@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image1 from "../../public/login.webp";
 import Image from "next/image";
 import SignUpImage1 from "../../public/signup1.svg";
@@ -6,6 +7,8 @@ import Apple from "../../public/apple.svg";
 import PlayStore from "../../public/playstore.svg";
 import InstantAccess from "../../public/instantaccess.svg";
 import CheckoutCards from "../../components/cards/Checkoutcards";
+import Trainercard from "../../components/cards/Trainercard";
+import { Button } from "../../components/ui/Button";
 
 const Checkout = () => {
   return (
@@ -31,30 +34,27 @@ const Checkout = () => {
                     <Image src={SignUpImage1} alt="" className="text-2xl" />
                     Select Subscription Plan
                   </p>
-                  {/* Card 1 */}
-                  {/* checkout card */}
+
+                  {/* Checkout Card */}
                   <CheckoutCards />
-                  {/* View Card */}
-                  {/* Trainee cards components */}
+                  {/* Trainer Card */}
+                  <Trainercard />
                 </div>
                 <div className="px-[18%] relative mob:px-[6%]">
-                  <div className="relative z-[100] flex h-14 cursor-pointer items-center justify-center overflow-hidden rounded-3xl bg-lightgreen font-medium text-primary mt-11  w-full text-base hover:bg-brown transition-colors duration-500">
-                    <div className="flex justify-center items-center">
-                      <span className="relative z-10">
-                        Continue To Create Account
-                      </span>
-                    </div>
-                    <span className="absolute left-0 top-0 z-0 h-[1px] w-[1px] translate-x-[-50%] translate-y-[-50%] rounded-[50%] bg-transparent"></span>
-                  </div>
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                    className="bg-lightgreen hover:bg-brown transition-colors duration-500 "
+                  >
+                    Continue To Create Account
+                  </Button>
                   <p className="mt-5 text-center text-xs font-light leading-5 mob:pb-6">
-                    At the end of your free trial your subscription will
-                    automatically
+                    This subscription is billed annually at $99.99/year and
                     <br />
-                    rollover to a $99.99/year subscription billed annually
+                    recurring
                     <br />
-                    unless
+                    unless cancelled.
                     <br />
-                    cancelled.
                     <br />
                     <span>
                       <a className="underline cursor-pointer">Privacy Policy</a>{" "}
@@ -81,7 +81,15 @@ const Checkout = () => {
               <span className="relative z-10 tab:hidden mob:hidden">Home</span>
             </div>
             <div className="relative z-[100] cursor-pointer overflow-hidden flex h-11 w-24 items-center justify-center rounded-3xl bg-primary text-base font-medium  hover:text-primary mob:hidden tab:hidden hover:bg-brown">
-              <button className="relative z-10"> Login</button>
+              <Link href="/">
+                <Button
+                  variant="default"
+                  size="default"
+                  className="bg-primary text-black hover:bg-darkbrown hover:text-primary"
+                >
+                  Login
+                </Button>
+              </Link>
             </div>
           </div>
           <Image
