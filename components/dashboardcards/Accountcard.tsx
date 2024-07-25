@@ -3,6 +3,7 @@ import { FaSpinner } from "react-icons/fa";
 import Image from "next/image";
 import Close from "../../public/videomodalclose.svg";
 import useMyAccount from "../../hooks/useMyAccount";
+import { Button } from "../ui/Button";
 
 interface AccountcardProps {
   onClose: () => void;
@@ -49,9 +50,11 @@ const Accountcard: React.FC<AccountcardProps> = ({ onClose }) => {
             name="confirmPassword"
             className="mb-3 w-full rounded-3xl px-6 py-4 text-base font-medium leading-4 outline-black"
           />
-          <button
+          <Button
+            variant="secondary"
+            size="sm"
             type="submit"
-            className="mt-10 flex h-14 w-full items-center justify-center rounded-3xl bg-darkbrown text-lg font-medium text-primary"
+            className="hover:bg-darkbrown"
             disabled={isLoading}
           >
             {isLoading ? (
@@ -59,7 +62,7 @@ const Accountcard: React.FC<AccountcardProps> = ({ onClose }) => {
             ) : (
               "Save Changes"
             )}
-          </button>
+          </Button>
         </form>
       </div>
     </div>

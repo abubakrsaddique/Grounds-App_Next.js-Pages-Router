@@ -5,11 +5,14 @@ import AddButton from "../../public/add.svg";
 import Apple from "../../public/apple.svg";
 import PlayStore from "../../public/playstore.svg";
 import Account from "../../components/dashboardcards/Account";
-import Accountcard from "../../components/dashboardcards/Accountcard";
+import Profile from "../../components/dashboardcards/Profile";
+import Plan from "../../components/dashboardcards/Plan";
+import AccountCard from "../../components/dashboardcards/Accountcard";
+import ProfileCard from "../../components/dashboardcards/Profilecard";
 import useModal from "../../hooks/useModal";
 
 const Dashboard: React.FC = () => {
-  const { isModalOpen, toggleModal } = useModal();
+  const { isModalOpen, modalType, openModal, closeModal } = useModal();
 
   return (
     <div className="min-h-screen bg-gray w-full mob:no-scrollbar">
@@ -68,9 +71,29 @@ const Dashboard: React.FC = () => {
         <div className="flex flex-row gap-8 w-full mob:flex-col tab:flex-col ">
           {/* Left side */}
           <div className="w-[50%] flex flex-shrink-0 flex-col mob:w-full tab:w-full">
-            <Account email="email@gmail.com" onEdit={toggleModal} />
+            <Account
+              email="email@gmail.com"
+              onEdit={() => openModal("account")}
+            />
+            <Profile
+              age={22}
+              height="5ft9inches"
+              weight="75kg"
+              goals="lose weight"
+              dailyMealAmount={3}
+              onEdit={() => openModal("profile")}
+            />
+            {isModalOpen && modalType === "account" && (
+              <AccountCard onClose={closeModal} />
+            )}
+            {isModalOpen && modalType === "profile" && (
+              <ProfileCard onClose={closeModal} />
+            )}
           </div>
-          {isModalOpen && <Accountcard onClose={toggleModal} />}
+          {/* Right Side */}
+          <div className="w-[50%] flex-shrink-0 flex flex-col mob:w-full mob:pb-10 mob:-mt-10 tab:w-full tab:pb-10 tab:-mt-10">
+            <Plan />
+          </div>
         </div>
       </div>
     </div>
