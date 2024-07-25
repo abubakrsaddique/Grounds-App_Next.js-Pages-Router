@@ -63,7 +63,11 @@ const Login = () => {
           </div>
           <div className="absolute right-14 top-9 flex items-center gap-4 mob:hidden">
             <Link href="/">
-              <Button variant="default" size="default">
+              <Button
+                variant="default"
+                size="default"
+                className="bg-primary text-black hover:bg-darkbrown hover:text-primary"
+              >
                 Home
               </Button>
             </Link>

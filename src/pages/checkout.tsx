@@ -19,14 +19,19 @@ const Checkout = () => {
           <div className="w-full realtive">
             <div className="h-screen overflow-scroll mt-0 block">
               <div className="flex h-10 w-10 cursor-pointer items-center mt-8 ml-8 justify-center rounded-xl border-[3px] border-darkbrown border-opacity-[0.1] mob:hidden tab:hidden">
-                <Image src={BackArrow} alt="" />
+                <Link href="/login">
+                  {" "}
+                  <Image src={BackArrow} alt="" />
+                </Link>
               </div>
               <div>
                 <p className=" text-[18px] font-normal leading-4 text-lightbrown mt-12 w-[70%] mx-auto mob:mx-8">
                   Already have an account?
-                  <span className="cursor-pointer  font-medium text-lightgreen underline ">
-                    Log In
-                  </span>
+                  <Link href="/login">
+                    <span className="cursor-pointer  font-medium text-lightgreen underline ">
+                      Log In
+                    </span>
+                  </Link>
                 </p>
                 <div className="relative pl-5 w-[70%] mx-auto mob:w-[90%] mob:pl-0">
                   <div className="absolute left-0 top-8 h-full border border-dashed border-lightgreen mob:hidden"></div>
@@ -73,15 +78,23 @@ const Checkout = () => {
         <div className="relative block w-[60%] mob:w-full lg:w-[60%] tab:w-full">
           <div className="absolute left-5 top-5 hidden tab:block mob:block">
             <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border-[3px] border-darkbrown border-opacity-[0.1]">
-              <Image src={BackArrow} alt="" />
+              <Link href="/login">
+                {" "}
+                <Image src={BackArrow} alt="" />
+              </Link>
             </div>
           </div>
           <div className="absolute right-14 top-9 flex items-center  gap-4 mob:hidden">
             <div className="relative z-[100] text-primary cursor-pointer overflow-hidden flex h-11 w-24 items-center justify-center rounded-3xl text-base font-medium ">
-              <span className="relative z-10 tab:hidden mob:hidden">Home</span>
+              <Link href="/">
+                {" "}
+                <span className="relative z-10 tab:hidden mob:hidden">
+                  Home
+                </span>
+              </Link>
             </div>
             <div className="relative z-[100] cursor-pointer overflow-hidden flex h-11 w-24 items-center justify-center rounded-3xl bg-primary text-base font-medium  hover:text-primary mob:hidden tab:hidden hover:bg-brown">
-              <Link href="/">
+              <Link href="/login">
                 <Button
                   variant="default"
                   size="default"

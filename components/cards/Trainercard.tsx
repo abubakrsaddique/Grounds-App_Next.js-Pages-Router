@@ -1,17 +1,9 @@
-import { useState } from "react";
+import { FC } from "react";
+import useModal from "../../hooks/useModal";
 
-const Trainercard: React.FC = () => {
-  const [selectedTrainer, setSelectedTrainer] = useState<string | null>(null);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const toggleCard = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleTrainerSelect = (trainer: string) => {
-    setSelectedTrainer(trainer);
-    setIsOpen(false);
-  };
+const Trainercard: FC = () => {
+  const { isModalOpen, toggleModal, selectedTrainer, handleTrainerSelect } =
+    useModal();
 
   return (
     <div className="relative w-full mt-5">
@@ -23,7 +15,7 @@ const Trainercard: React.FC = () => {
               {selectedTrainer}
               <span
                 className="text-sm font-semibold text-red cursor-pointer"
-                onClick={toggleCard}
+                onClick={toggleModal}
               >
                 Change
               </span>
@@ -33,7 +25,7 @@ const Trainercard: React.FC = () => {
               Trainer referred by
               <span
                 className="text-sm font-semibold text-lightgreen cursor-pointer"
-                onClick={toggleCard}
+                onClick={toggleModal}
               >
                 View
               </span>
@@ -45,7 +37,7 @@ const Trainercard: React.FC = () => {
       {/* View Card */}
       <div
         className={`absolute mt-2 z-[101] w-[94%] rounded-2xl border-2 border-lightbrown bg-primary py-2 pt-4 ${
-          isOpen ? "" : "hidden"
+          isModalOpen ? "" : "hidden"
         }`}
       >
         {[

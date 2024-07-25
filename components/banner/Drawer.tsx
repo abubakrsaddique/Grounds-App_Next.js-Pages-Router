@@ -9,6 +9,7 @@ import Dot from "../../public/dot.svg";
 import Apple from "../../public/apple.svg";
 import PlayStore from "../../public/playstore.svg";
 import useModal from "../../hooks/useModal";
+import Link from "next/link";
 
 interface DrawerProps {
   menuOpen: boolean;
@@ -70,13 +71,19 @@ const Drawer: React.FC<DrawerProps> = ({ menuOpen, toggleMenu }) => {
               </span>
             </div>
 
-            <div className="mt-12 flex h-[56px] w-full items-center text-primary justify-center rounded-3xl bg-darkbrown text-xl font-bold leading-6">
-              Get Started
-            </div>
+            <Link href="/checkout">
+              {" "}
+              <div className="mt-12 flex h-[56px] w-full items-center text-primary justify-center rounded-3xl bg-darkbrown text-xl font-bold leading-6">
+                Get Started
+              </div>
+            </Link>
 
             <p className="mt-4 text-center text-base font-normal text-lightbrown leading-5 ">
               Already have an account?{" "}
-              <a className="text-darkbrown underline">Log In</a>
+              <Link href="/login">
+                {" "}
+                <p className="text-darkbrown underline">Log In</p>
+              </Link>
             </p>
           </div>
           <div className="w-full border-t-[0.5px] border-caption opacity-50 my-0 mb-10 mt-10"></div>
