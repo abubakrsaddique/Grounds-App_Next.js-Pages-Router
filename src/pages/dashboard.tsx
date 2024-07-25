@@ -10,6 +10,7 @@ import Plan from "../../components/dashboardcards/Plan";
 import AccountCard from "../../components/dashboardcards/Accountcard";
 import ProfileCard from "../../components/dashboardcards/Profilecard";
 import useModal from "../../hooks/useModal";
+import Payment from "../../components/dashboardcards/Payment";
 
 const Dashboard: React.FC = () => {
   const { isModalOpen, modalType, openModal, closeModal } = useModal();
@@ -91,8 +92,10 @@ const Dashboard: React.FC = () => {
             )}
           </div>
           {/* Right Side */}
-          <div className="w-[50%] flex-shrink-0 flex flex-col mob:w-full mob:pb-10 mob:-mt-10 tab:w-full tab:pb-10 tab:-mt-10">
+          <div className="w-[50%] flex-shrink-0 flex flex-col pb-10 mob:w-full mob:pb-10 mob:-mt-10 tab:w-full tab:pb-10 tab:-mt-10">
             <Plan />
+            <div className="mt-8"></div>
+            <Payment />
           </div>
         </div>
       </div>
