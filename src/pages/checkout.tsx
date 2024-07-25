@@ -46,13 +46,16 @@ const Checkout = () => {
                   <Trainercard />
                 </div>
                 <div className="px-[18%] relative mob:px-[6%]">
-                  <Button
-                    variant="secondary"
-                    size="lg"
-                    className="bg-lightgreen hover:bg-brown transition-colors duration-500 "
-                  >
-                    Continue To Create Account
-                  </Button>
+                  <Link href="/signup">
+                    {" "}
+                    <Button
+                      variant="secondary"
+                      size="lg"
+                      className="bg-lightgreen hover:bg-brown transition-colors duration-500 "
+                    >
+                      Continue To Create Account
+                    </Button>
+                  </Link>
                   <p className="mt-5 text-center text-xs font-light leading-5 mob:pb-6">
                     This subscription is billed annually at $99.99/year and
                     <br />
