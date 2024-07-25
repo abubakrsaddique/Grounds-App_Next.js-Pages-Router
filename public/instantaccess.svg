@@ -1,0 +1,14 @@
+<svg
+                  className="absolute -right-[2px] w-full"
+                  width="179"
+                  height="11"
+                  viewBox="0 0 179 11"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 9C7.58738 5.34032 52.2097 -0.881146 178 3.51047"
+                    stroke="white"
+                    strokeWidth="3"
+                  ></path>
+                </svg>
