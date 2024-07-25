@@ -32,9 +32,11 @@ const Login = () => {
               </p>
               <p className="mt-10 text-center text-sm font-medium text-lightbrown">
                 You don’t have an account?{" "}
-                <span className="font-semibold cursor-pointer text-darkbrown underline">
-                  Sign Up
-                </span>
+                <Link href="/checkout">
+                  <span className="font-semibold cursor-pointer text-darkbrown underline">
+                    Sign Up
+                  </span>
+                </Link>
               </p>
               <button type="submit" className="mt-4">
                 <div className="relative z-[100] flex h-14 cursor-pointer items-center justify-center overflow-hidden rounded-3xl font-medium text-primary w-full bg-darkbrown text-base hover:bg-lightgreen mob:w-[350px]">
