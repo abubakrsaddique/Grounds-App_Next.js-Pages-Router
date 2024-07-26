@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import EditButton from "../../public/edit.svg";
+import ProfileCard from "./Profilecard";
 
 interface ProfileProps {
   age: number;
@@ -9,6 +10,7 @@ interface ProfileProps {
   goals: string;
   dailyMealAmount: number;
   onEdit: () => void;
+  refetchProfile: () => void;
 }
 
 const Profile: React.FC<ProfileProps> = ({
@@ -18,7 +20,17 @@ const Profile: React.FC<ProfileProps> = ({
   goals,
   dailyMealAmount,
   onEdit,
+  refetchProfile,
 }) => {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleClose = () => {
+    setIsEditing(false);
+  };
   return (
     <div className="mt-8">
       <div className="pb-12">
@@ -78,6 +90,9 @@ const Profile: React.FC<ProfileProps> = ({
           </div>
         </div>
       </div>
+      {isEditing && (
+        <ProfileCard onClose={handleClose} refetchProfile={refetchProfile} />
+      )}
     </div>
   );
 };

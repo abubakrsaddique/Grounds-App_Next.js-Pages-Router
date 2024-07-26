@@ -13,9 +13,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 interface ProfileCardProps {
   onClose: () => void;
+  refetchProfile: () => void;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({
+  onClose,
+  refetchProfile,
+}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const {
     lengthUnit,
@@ -66,6 +70,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
     {
       onSuccess: () => {
         toast.success("Profile updated successfully!");
+        refetchProfile();
         onClose();
       },
       onError: (error: any) => {

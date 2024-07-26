@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useQuery } from "react-query";
 import AddImage from "../../public/addimage.webp";
 import AddButton from "../../public/add.svg";
 import Apple from "../../public/apple.svg";
@@ -14,6 +15,18 @@ import ImageCard from "../../components/dashboardcards/Imagecard";
 import useModal from "../../hooks/useModal";
 import Payment from "../../components/dashboardcards/Payment";
 import { useRouter } from "next/router";
+import { firestore } from "../../Firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { useAuth } from "../../context/AuthContext";
+
+const fetchProfileData = async (uid: string) => {
+  const userDocRef = doc(firestore, `users/${uid}`);
+  const docSnap = await getDoc(userDocRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  }
+  throw new Error("Profile data not found");
+};
 
 const Dashboard: React.FC = () => {
   const {
@@ -27,6 +40,15 @@ const Dashboard: React.FC = () => {
   } = useModal();
   const router = useRouter();
   const { firstName, email } = router.query;
+
+  const { data: user } = useAuth();
+  const { data: profileData, refetch } = useQuery(
+    ["profileData", user?.uid],
+    () => fetchProfileData(user?.uid || ""),
+    {
+      enabled: !!user,
+    }
+  );
 
   return (
     <div className="min-h-screen bg-gray w-full mob:no-scrollbar">
@@ -94,19 +116,19 @@ const Dashboard: React.FC = () => {
               email={email as string}
               onEdit={() => openModal("account")}
             />
-            <Profile
-              age={22}
-              height="5ft9inches"
-              weight="75kg"
-              goals="lose weight"
-              dailyMealAmount={3}
-              onEdit={() => openModal("profile")}
-            />
-            {isModalOpen && modalType === "account" && (
-              <AccountCard onClose={closeModal} />
+            {profileData && (
+              <Profile
+                age={profileData.age || 0}
+                height={profileData.height || ""}
+                weight={profileData.weight || ""}
+                goals={profileData.selectedGoal || ""}
+                dailyMealAmount={parseInt(profileData.selectedMeal) || 0}
+                onEdit={() => openModal("profile")}
+                refetchProfile={refetch}
+              />
             )}
             {isModalOpen && modalType === "profile" && (
-              <ProfileCard onClose={closeModal} />
+              <ProfileCard refetchProfile={refetch} onClose={closeModal} />
             )}
           </div>
           {/* Right Side */}
