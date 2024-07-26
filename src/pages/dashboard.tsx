@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "react-query";
@@ -15,11 +15,10 @@ import ImageCard from "../../components/dashboardcards/Imagecard";
 import useModal from "../../hooks/useModal";
 import Payment from "../../components/dashboardcards/Payment";
 import { useRouter } from "next/router";
-import { firestore } from "../../Firebase";
+import { firestore, auth } from "../../Firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { useAuth } from "../../context/AuthContext";
 import { signOut } from "firebase/auth";
-import { auth } from "../../Firebase";
+import { useAuth } from "../../hooks/useAuth";
 
 const fetchProfileData = async (uid: string) => {
   const userDocRef = doc(firestore, `users/${uid}`);
@@ -43,14 +42,35 @@ const Dashboard: React.FC = () => {
   const router = useRouter();
   const { firstName, email } = router.query;
 
-  const { data: user } = useAuth();
-  const { data: profileData, refetch } = useQuery(
+  const { data: user, refetch: refetchUser } = useAuth();
+
+  const {
+    data: profileData,
+    refetch,
+    // isFetching,
+    isError,
+  } = useQuery(
     ["profileData", user?.uid],
-    () => fetchProfileData(user?.uid || ""),
+    () =>
+      user?.uid ? fetchProfileData(user.uid) : Promise.reject("No user UID"),
     {
       enabled: !!user,
+      refetchOnWindowFocus: false,
     }
   );
+
+  useEffect(() => {
+    if (user) {
+      refetch();
+    }
+  }, [user, refetch]);
+
+  useEffect(() => {
+    if (!user) {
+      refetchUser();
+    }
+  }, [user, refetchUser]);
+
   const handleImageUpdate = () => {
     refetch();
   };
@@ -63,6 +83,9 @@ const Dashboard: React.FC = () => {
       console.error("Logout error:", error);
     }
   };
+
+  // if (isFetching) return <p>Loading...</p>;
+  if (isError) return <p>Error fetching profile data.</p>;
 
   return (
     <div className="min-h-screen bg-gray w-full mob:no-scrollbar">
