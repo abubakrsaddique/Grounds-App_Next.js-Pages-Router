@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaSpinner } from "react-icons/fa";
 import Close from "../../public/videomodalclose.svg";
 import useEditProfile from "../../hooks/useEditProfile";
 import Image from "next/image";
 import { Button } from "../ui/Button";
 import { useMutation } from "react-query";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { firestore } from "../../Firebase";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
@@ -21,6 +21,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   refetchProfile,
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
+
   const {
     lengthUnit,
     weightUnit,
@@ -34,6 +35,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     kgValue,
     lbsValue,
     setAge,
+    setHeight,
+    setLengthUnit,
+    setFeetInches,
+    setCmValue,
+    setWeightUnit,
+    setKgValue,
+    setLbsValue,
     handleLengthUnitChange,
     handleWeightUnitChange,
     handleFeetInputChange,
@@ -56,7 +64,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       }
 
       const userDocRef = doc(firestore, `users/${user.uid}`);
-
       const profileData = {
         age,
         height: formatHeight(),
@@ -81,6 +88,50 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       },
     }
   );
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      if (user) {
+        const userDocRef = doc(firestore, `users/${user.uid}`);
+        const docSnap = await getDoc(userDocRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setAge(data.age || 0);
+
+          if (data.height) {
+            const heightStr = data.height;
+            if (heightStr.includes("ft")) {
+              const [feet, inches] = heightStr.split("ft");
+              setLengthUnit("ft");
+              setFeetInches({
+                feet: feet || "",
+                inches: inches.replace("inch", "") || "",
+              });
+              setHeight([feet || "", inches.replace("inch", "") || ""]);
+            } else if (heightStr.includes("cm")) {
+              setLengthUnit("cm");
+              setCmValue(heightStr.replace("cm", ""));
+              setHeight([heightStr.replace("cm", ""), null]);
+            }
+          }
+
+          if (data.weight) {
+            const weightStr = data.weight;
+            if (weightStr.includes("kg")) {
+              setWeightUnit("kg");
+              setKgValue(weightStr.replace("kg", ""));
+            } else if (weightStr.includes("lbs")) {
+              setWeightUnit("lbs");
+              setLbsValue(weightStr.replace("lbs", ""));
+            }
+          }
+          handleGoalChange(data.selectedGoal || "");
+          handleMealChange(data.selectedMeal || 0);
+        }
+      }
+    };
+    fetchProfileData();
+  }, [user]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
