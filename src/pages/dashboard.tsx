@@ -49,6 +49,9 @@ const Dashboard: React.FC = () => {
       enabled: !!user,
     }
   );
+  const handleImageUpdate = () => {
+    refetch();
+  };
 
   return (
     <div className="min-h-screen bg-gray w-full mob:no-scrollbar">
@@ -70,14 +73,24 @@ const Dashboard: React.FC = () => {
           <div className="flex items-center justify-between flex-row mob:flex-col tab:flex-col">
             <div className="flex items-center gap-6 flex-row mob:flex-col tab:flex-col">
               <div className="relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full">
-                <Image
-                  alt="ProfileImage"
-                  width={96}
-                  height={96}
-                  className="h-24 w-24 rounded-full object-cover"
-                  src={AddImage}
-                  onClick={openImageCard}
-                />
+                {profileData?.profileImage ? (
+                  <Image
+                    src={profileData.profileImage}
+                    alt="Profile Image"
+                    width={96}
+                    height={96}
+                    className="rounded-full w-[100%] h-[100%]"
+                  />
+                ) : (
+                  <Image
+                    src={AddImage}
+                    alt="Add Image"
+                    width={96}
+                    height={96}
+                    className="rounded-full cursor-pointer"
+                    onClick={openImageCard}
+                  />
+                )}
               </div>
               <Image
                 src={AddButton}
@@ -87,7 +100,13 @@ const Dashboard: React.FC = () => {
                 onClick={openImageCard}
                 className="ml-[-49px] mt-[68px] z-[1] cursor-pointer mob:ml-[69px] mob:mt-[-48px] tab:ml-[70px] tab:mt-[-48px]"
               />
-              {isImageCardOpen && <ImageCard onClose={closeImageCard} />}
+              {isImageCardOpen && (
+                <ImageCard
+                  onClose={closeImageCard}
+                  onImageUpdate={handleImageUpdate}
+                />
+              )}
+
               <p className="text-xl font-semibold leading-7 text-brown">
                 Welcome , {firstName}
               </p>
@@ -116,6 +135,9 @@ const Dashboard: React.FC = () => {
               email={email as string}
               onEdit={() => openModal("account")}
             />
+            {isModalOpen && modalType === "account" && (
+              <AccountCard onClose={closeModal} />
+            )}
             {profileData && (
               <Profile
                 age={profileData.age || 0}
