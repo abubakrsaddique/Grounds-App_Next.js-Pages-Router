@@ -1,23 +1,90 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import { useMutation } from "react-query";
+import { useRouter } from "next/router";
+import { auth, firestore } from "../../Firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import BackArrow from "../../public/backarrow.svg";
 import Apple from "../../public/apple.svg";
 import PlayStore from "../../public/playstore.svg";
 import { Button } from "../../components/ui/Button";
+import { doc, getDoc } from "firebase/firestore";
+
+export interface UserData {
+  uid: string;
+  firstName: string;
+  email: string;
+}
+
+const loginUser = async (
+  email: string,
+  password: string
+): Promise<UserData> => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+
+    if (user) {
+      const userRef = doc(firestore, `users/${user.uid}`);
+      const userDoc = await getDoc(userRef);
+
+      if (!userDoc.exists()) {
+        throw new Error("User data not found");
+      }
+
+      return { ...userDoc.data(), uid: user.uid } as UserData;
+    }
+
+    throw new Error("User not found");
+  } catch (error) {
+    throw new Error("" || "Login failed");
+  }
+};
 
 const Login = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const router = useRouter();
+
+  const { mutate } = useMutation(() => loginUser(email, password), {
+    onSuccess: (data: UserData) => {
+      router.push({
+        pathname: "/dashboard",
+        query: { firstName: data.firstName, email: data.email },
+      });
+      toast.success("Login successful!");
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || "Login failed");
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutate();
+  };
+
   return (
     <div className="min-h-screen w-full bg-gray">
       <div className="flex flex-row mob:flex-col-reverse tab:flex-col-reverse">
         <div className="relative w-[70%] mob:w-full tab:w-full tab:mt-14">
           <div className="flex h-full w-full items-center justify-center py-6">
-            <form className="flex flex-col">
+            <form className="flex flex-col" onSubmit={handleSubmit}>
               <p className="mb-8 text-3xl font-bold text-darkbrown">Login</p>
               <input
                 required
                 type="email"
                 placeholder="Email"
                 name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="mb-3 w-[400px] rounded-3xl px-6 py-4 text-sm font-medium leading-4 outline-black mob:w-[350px]"
               />
               <input
@@ -25,6 +92,8 @@ const Login = () => {
                 type="password"
                 placeholder="Password"
                 name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="mb-3 w-[400px] rounded-3xl px-6 py-4 text-sm font-medium leading-4 outline-black mob:w-[350px]"
               />
               <p className="text-darkbrown mt-2 w-fit text-sm font-medium leading-5 underline cursor-pointer">
