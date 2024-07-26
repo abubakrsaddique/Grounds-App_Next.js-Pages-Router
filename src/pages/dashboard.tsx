@@ -11,9 +11,12 @@ import AccountCard from "../../components/dashboardcards/Accountcard";
 import ProfileCard from "../../components/dashboardcards/Profilecard";
 import useModal from "../../hooks/useModal";
 import Payment from "../../components/dashboardcards/Payment";
+import { useRouter } from "next/router";
 
 const Dashboard: React.FC = () => {
   const { isModalOpen, modalType, openModal, closeModal } = useModal();
+  const router = useRouter();
+  const { firstName, email } = router.query;
 
   return (
     <div className="min-h-screen bg-gray w-full mob:no-scrollbar">
@@ -49,7 +52,7 @@ const Dashboard: React.FC = () => {
                 className="ml-[-49px] mt-[68px] z-[1] cursor-pointer mob:ml-[69px] mob:mt-[-48px] tab:ml-[70px] tab:mt-[-48px]"
               />
               <p className="text-xl font-semibold leading-7 text-brown">
-                Welcome
+                Welcome , {firstName}
               </p>
             </div>
             <div className="flex flex-col justify-center">
@@ -73,7 +76,7 @@ const Dashboard: React.FC = () => {
           {/* Left side */}
           <div className="w-[50%] flex flex-shrink-0 flex-col mob:w-full tab:w-full">
             <Account
-              email="email@gmail.com"
+              email={email as string}
               onEdit={() => openModal("account")}
             />
             <Profile

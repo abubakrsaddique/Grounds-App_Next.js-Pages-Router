@@ -1,3 +1,7 @@
+import React, { useState } from "react";
+import { useMutation } from "react-query";
+import { useRouter } from "next/router";
+import { auth, firestore } from "../../Firebase";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../../components/ui/Button";
@@ -8,8 +12,129 @@ import InstantAccess from "../../public/instantaccess.svg";
 import StartUpImage1 from "../../public/startup1.svg";
 import StartUpImage2 from "../../public/startup2.svg";
 import StartUpImage3 from "../../public/startup3.svg";
+import { toast } from "react-toastify";
 
-const Signup = () => {
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  cardNumber: string;
+  expiry: string;
+  cvc: string;
+}
+
+const saveFormData = async (data: FormData) => {
+  try {
+    const userCredential = await auth.createUserWithEmailAndPassword(
+      data.email,
+      data.password
+    );
+    const user = userCredential.user;
+
+    if (user) {
+      const uid = user.uid;
+      const userRef = firestore.collection("users").doc(uid);
+      await userRef.set({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        cardNumber: data.cardNumber,
+        expiry: data.expiry,
+        cvc: data.cvc,
+      });
+
+      return { firstName: data.firstName, email: data.email };
+    } else {
+      throw new Error("User creation failed");
+    }
+  } catch (error) {}
+};
+
+const Signup: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    cardNumber: "",
+    expiry: "",
+    cvc: "",
+  });
+
+  const [errors, setErrors] = useState({
+    password: "",
+    cardNumber: "",
+    expiry: "",
+    cvc: "",
+  });
+
+  const router = useRouter();
+
+  const { mutate } = useMutation(saveFormData, {
+    onSuccess: (data) => {
+      if (data) {
+        toast.success("User signed up successfully!");
+        router.push({
+          pathname: "/dashboard",
+          query: {
+            firstName: data.firstName,
+            email: data.email,
+          },
+        });
+      } else {
+        toast.error("Signup failed. Please try again.");
+      }
+    },
+    onError: (error: Error) => {
+      toast.error(`Error saving form data: ${error.message}`);
+    },
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    switch (name) {
+      case "password":
+        setErrors((prev) => ({
+          ...prev,
+          password: value.length < 6 ? "Password must be  6 characters" : "",
+        }));
+        break;
+      case "cardNumber":
+        setErrors((prev) => ({
+          ...prev,
+          cardNumber:
+            value.length !== 16 ? "Card number must be 16 digits" : "",
+        }));
+        break;
+      case "expiry":
+        const expiryPattern = /^(0[1-9]|1[0-2])\/\d{2}$/;
+        setErrors((prev) => ({
+          ...prev,
+          expiry: !expiryPattern.test(value)
+            ? "Expiry date must be in MM/YY format"
+            : "",
+        }));
+        break;
+      case "cvc":
+        setErrors((prev) => ({
+          ...prev,
+          cvc: value.length !== 3 ? "CVC must be  3 digits" : "",
+        }));
+        break;
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!Object.values(errors).every((error) => error === "")) {
+      return;
+    }
+    mutate(formData);
+  };
   return (
     <div className="min-h-screen w-full bg-gray">
       <div className="flex flex-row mob:flex-col-reverse tab:flex-col-reverse">
@@ -29,7 +154,10 @@ const Signup = () => {
                   </p>
 
                   <div className="mt-8 flex flex-col gap-4">
-                    <form className="flex relative flex-col">
+                    <form
+                      className="flex relative flex-col"
+                      onSubmit={handleSubmit}
+                    >
                       <div className="mb-2 mt-0 flex items-center gap-2">
                         <Image src={StartUpImage2} alt="Startup Image 2" />
                         <p className="text-darkbrown text-xs font-normal leading-6">
@@ -42,6 +170,8 @@ const Signup = () => {
                         placeholder="First Name"
                         name="firstName"
                         className="mb-3 rounded-3xl px-6 py-4 text-sm font-medium leading-4 outline-black mob:w-[350px]"
+                        value={formData.firstName}
+                        onChange={handleChange}
                       />
                       <input
                         required
@@ -49,6 +179,8 @@ const Signup = () => {
                         placeholder="Last Name"
                         name="lastName"
                         className="mb-3 rounded-3xl px-6 py-4 text-sm font-medium leading-4 outline-black mob:w-[350px]"
+                        value={formData.lastName}
+                        onChange={handleChange}
                       />
                       <input
                         required
@@ -56,6 +188,8 @@ const Signup = () => {
                         placeholder="Email"
                         name="email"
                         className="mb-3 rounded-3xl px-6 py-4 text-sm font-medium leading-4 outline-black mob:w-[350px]"
+                        value={formData.email}
+                        onChange={handleChange}
                       />
                       <input
                         required
@@ -63,7 +197,13 @@ const Signup = () => {
                         placeholder="Password"
                         name="password"
                         className="mb-3 rounded-3xl px-6 py-4 text-sm font-medium leading-4 outline-black mob:w-[350px]"
+                        value={formData.password}
+                        onChange={handleChange}
+                        minLength={6}
                       />
+                      {errors.password && (
+                        <p className="text-darkbrown">{errors.password}</p>
+                      )}
                       <div className="mb-4 mt-8 flex items-center justify-between gap-0">
                         <p className="text-dark-brown z-10 ml-[-35px] flex items-center gap-2 text-[20px] font-semibold leading-8 mob:ml-0 mob:text-[18px]">
                           <Image src={StartUpImage3} alt="Startup Image 3" />
@@ -77,7 +217,13 @@ const Signup = () => {
                           placeholder="Card Number"
                           name="cardNumber"
                           className="mb-3 rounded-3xl px-4 py-2 w-full outline-black"
+                          value={formData.cardNumber}
+                          onChange={handleChange}
+                          maxLength={16}
                         />
+                        {errors.cardNumber && (
+                          <p className="text-darkbrown">{errors.cardNumber}</p>
+                        )}
                       </div>
 
                       <div className="flex space-x-4">
@@ -87,16 +233,28 @@ const Signup = () => {
                           placeholder="(MM/YY)"
                           name="expiry"
                           className="mb-3 rounded-3xl px-4 py-2 w-full outline-black"
+                          value={formData.expiry}
+                          onChange={handleChange}
+                          pattern="(0[1-9]|1[0-2])\/\d{2}"
                         />
+
                         <input
                           required
                           type="text"
                           placeholder="CVC"
                           name="cvc"
                           className="mb-3 rounded-3xl px-4 py-2 w-full outline-black"
+                          value={formData.cvc}
+                          onChange={handleChange}
+                          maxLength={3}
                         />
                       </div>
-
+                      {errors.expiry && (
+                        <p className="text-darkbrown">{errors.expiry}</p>
+                      )}
+                      {errors.cvc && (
+                        <p className="text-darkbrown">{errors.cvc}</p>
+                      )}
                       <p className="mb-10 mt-8 block text-sm font-normal leading-5 text-lightbrown mob:hidden">
                         Already have an account?{" "}
                         <Link href="/login">
