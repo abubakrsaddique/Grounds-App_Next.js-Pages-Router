@@ -8,12 +8,16 @@ interface UseModalReturn {
   closeModal: () => void;
   selectedTrainer: string | null;
   handleTrainerSelect: (trainer: string) => void;
+  isImageCardOpen: boolean;
+  openImageCard: () => void;
+  closeImageCard: () => void;
 }
 
 const useModal = (): UseModalReturn => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalType, setModalType] = useState<string | null>(null);
   const [selectedTrainer, setSelectedTrainer] = useState<string | null>(null);
+  const [isImageCardOpen, setIsImageCardOpen] = useState<boolean>(false);
 
   const toggleModal = useCallback(() => {
     setIsModalOpen((prev) => !prev);
@@ -34,6 +38,14 @@ const useModal = (): UseModalReturn => {
     setIsModalOpen(false);
   };
 
+  const openImageCard = () => {
+    setIsImageCardOpen(true);
+  };
+
+  const closeImageCard = () => {
+    setIsImageCardOpen(false);
+  };
+
   return {
     isModalOpen,
     modalType,
@@ -42,6 +54,9 @@ const useModal = (): UseModalReturn => {
     closeModal,
     selectedTrainer,
     handleTrainerSelect,
+    isImageCardOpen,
+    openImageCard,
+    closeImageCard,
   };
 };
 

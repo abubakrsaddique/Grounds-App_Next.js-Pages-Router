@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import AddImage from "../../public/addimage.webp";
 import AddButton from "../../public/add.svg";
 import Apple from "../../public/apple.svg";
@@ -9,12 +10,21 @@ import Profile from "../../components/dashboardcards/Profile";
 import Plan from "../../components/dashboardcards/Plan";
 import AccountCard from "../../components/dashboardcards/Accountcard";
 import ProfileCard from "../../components/dashboardcards/Profilecard";
+import ImageCard from "../../components/dashboardcards/Imagecard";
 import useModal from "../../hooks/useModal";
 import Payment from "../../components/dashboardcards/Payment";
 import { useRouter } from "next/router";
 
 const Dashboard: React.FC = () => {
-  const { isModalOpen, modalType, openModal, closeModal } = useModal();
+  const {
+    isModalOpen,
+    modalType,
+    openModal,
+    closeModal,
+    isImageCardOpen,
+    openImageCard,
+    closeImageCard,
+  } = useModal();
   const router = useRouter();
   const { firstName, email } = router.query;
 
@@ -22,9 +32,11 @@ const Dashboard: React.FC = () => {
     <div className="min-h-screen bg-gray w-full mob:no-scrollbar">
       {/* Navbar */}
       <div className="flex items-center justify-between px-40 py-11 mob:px-4 mob:py-8 tab:px-4 tab:py-8">
-        <p className="text-darkbrown font-bold leading-10 text-[38px] cursor-pointer">
-          Grounds
-        </p>
+        <Link href="/">
+          <p className="text-darkbrown font-bold leading-10 text-[38px] cursor-pointer">
+            Grounds
+          </p>
+        </Link>
         <p className="cursor-pointer text-base font-semibold leading-5 text-black">
           Log out
         </p>
@@ -42,6 +54,7 @@ const Dashboard: React.FC = () => {
                   height={96}
                   className="h-24 w-24 rounded-full object-cover"
                   src={AddImage}
+                  onClick={openImageCard}
                 />
               </div>
               <Image
@@ -49,8 +62,10 @@ const Dashboard: React.FC = () => {
                 alt="Add Button"
                 width={24}
                 height={24}
+                onClick={openImageCard}
                 className="ml-[-49px] mt-[68px] z-[1] cursor-pointer mob:ml-[69px] mob:mt-[-48px] tab:ml-[70px] tab:mt-[-48px]"
               />
+              {isImageCardOpen && <ImageCard onClose={closeImageCard} />}
               <p className="text-xl font-semibold leading-7 text-brown">
                 Welcome , {firstName}
               </p>
