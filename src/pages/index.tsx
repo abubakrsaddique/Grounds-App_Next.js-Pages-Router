@@ -132,7 +132,11 @@ const Banner: React.FC = () => {
               </span>
             </p>
             <div>
-              <Button variant="primary" size="sm" className="mob:mt-4 tab:mt-4">
+              <Button
+                variant="primary"
+                size="base"
+                className="mob:mt-4 tab:mt-4"
+              >
                 Start Your Free Trial
                 <Image src={Arrow} alt="Arrow" />
               </Button>

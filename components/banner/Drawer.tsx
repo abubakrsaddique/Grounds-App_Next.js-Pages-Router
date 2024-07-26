@@ -43,9 +43,9 @@ const Drawer: React.FC<DrawerProps> = ({ menuOpen, toggleMenu }) => {
       >
         <div className="mt-6 flex items-center justify-between px-5">
           <a href="/">
-            <p className="text-darkbrown text-3xl font-bold leading-7">
+            <span className="text-darkbrown text-3xl font-bold leading-7">
               GROUNDS
-            </p>
+            </span>
           </a>
           <button onClick={toggleMenu}>
             <Image alt="closeIcon" src={Close} width={32} height={32} />

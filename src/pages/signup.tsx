@@ -99,14 +99,12 @@ const Signup = () => {
 
                       <p className="mb-10 mt-8 block text-sm font-normal leading-5 text-lightbrown mob:hidden">
                         Already have an account?{" "}
-                        <a>
-                          <Link href="/login">
-                            {" "}
-                            <span className="cursor-pointer font-medium text-lightgreen underline">
-                              Log In
-                            </span>
-                          </Link>
-                        </a>
+                        <Link href="/login">
+                          {" "}
+                          <span className="cursor-pointer font-medium text-lightgreen underline">
+                            Log In
+                          </span>
+                        </Link>
                       </p>
                       <Button
                         variant="secondary"
