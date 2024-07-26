@@ -10,10 +10,12 @@ import InstantAccess from "../../public/instantaccess.svg";
 import Drawer from "../../components/banner/Drawer";
 import useModal from "../../hooks/useModal";
 import { Button } from "../../components/ui/Button";
+import { useAuth } from "../../context/AuthContext";
 
 const Banner: React.FC = () => {
   const { isModalOpen, toggleModal } = useModal();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const { data: user } = useAuth();
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -77,9 +79,15 @@ const Banner: React.FC = () => {
               </p>
             </Link>
           </div>
-          <Link href="/login">
-            <Button variant="default">Login</Button>
-          </Link>
+          {user ? (
+            <Link href="/dashboard">
+              <Button variant="default">Dashboard</Button>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <Button variant="default">Login</Button>
+            </Link>
+          )}
         </nav>
         <Drawer menuOpen={menuOpen} toggleMenu={toggleMenu} />
         {/* For Mobile */}

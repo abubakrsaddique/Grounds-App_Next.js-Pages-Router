@@ -18,6 +18,8 @@ import { useRouter } from "next/router";
 import { firestore } from "../../Firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../context/AuthContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../../Firebase";
 
 const fetchProfileData = async (uid: string) => {
   const userDocRef = doc(firestore, `users/${uid}`);
@@ -53,6 +55,15 @@ const Dashboard: React.FC = () => {
     refetch();
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray w-full mob:no-scrollbar">
       {/* Navbar */}
@@ -62,7 +73,10 @@ const Dashboard: React.FC = () => {
             Grounds
           </p>
         </Link>
-        <p className="cursor-pointer text-base font-semibold leading-5 text-black">
+        <p
+          className="cursor-pointer text-base font-semibold leading-5 text-black"
+          onClick={handleLogout}
+        >
           Log out
         </p>
       </div>
@@ -138,11 +152,12 @@ const Dashboard: React.FC = () => {
             {isModalOpen && modalType === "account" && (
               <AccountCard onClose={closeModal} />
             )}
+
             {profileData && (
               <Profile
-                age={profileData.age || 0}
-                height={profileData.height || ""}
-                weight={profileData.weight || ""}
+                age={profileData.age || "Not Provided"}
+                height={profileData.height || "Not Provided"}
+                weight={profileData.weight || "Not Provided"}
                 goals={profileData.selectedGoal || ""}
                 dailyMealAmount={parseInt(profileData.selectedMeal) || 0}
                 onEdit={() => openModal("profile")}
