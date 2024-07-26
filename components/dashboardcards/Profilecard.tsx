@@ -4,16 +4,20 @@ import Close from "../../public/videomodalclose.svg";
 import useEditProfile from "../../hooks/useEditProfile";
 import Image from "next/image";
 import { Button } from "../ui/Button";
+import { useMutation } from "react-query";
+import { doc, setDoc } from "firebase/firestore";
+import { firestore } from "../../Firebase";
+import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface ProfileCardProps {
   onClose: () => void;
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
-  const [successMessage, setSuccessMessage] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const {
-    loading,
     lengthUnit,
     weightUnit,
     feetInches,
@@ -35,14 +39,56 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
     handleLbsInputChange,
     handleGoalChange,
     handleMealChange,
+    formatHeight,
+    formatWeight,
   } = useEditProfile();
+
+  const { data: user } = useAuth();
+
+  const mutation = useMutation(
+    async () => {
+      if (!user) {
+        throw new Error("User is not authenticated");
+      }
+
+      const userDocRef = doc(firestore, `users/${user.uid}`);
+
+      const profileData = {
+        age,
+        height: formatHeight(),
+        weight: formatWeight(),
+        selectedGoal,
+        selectedMeal,
+      };
+
+      await setDoc(userDocRef, profileData, { merge: true });
+    },
+    {
+      onSuccess: () => {
+        toast.success("Profile updated successfully!");
+        onClose();
+      },
+      onError: (error: any) => {
+        toast.error(error.message || "Failed to update profile");
+      },
+      onSettled: () => {
+        setLoading(false);
+      },
+    }
+  );
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    mutation.mutate();
+  };
 
   return (
     <div className="bg-black w-screen top-0 fixed right-0 h-screen z-50 bg-opacity-50">
       <div className="fixed top-0 right-0 h-full overflow-y-auto no-scrollbar max-w-md bg-darkgray rounded-tl-3xl rounded-bl-3xl z-50 p-5">
         <div className="w-full px-5 pb-5 mob:pl-12 mob:pr-1">
           <div className="h-full w-full flex items-center ">
-            <form className="w-full">
+            <form className="w-full" onSubmit={handleSubmit}>
               <div className="flex justify-end w-full">
                 <Image
                   src={Close}
@@ -286,12 +332,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
                   </div>
                 </div>
               </div>
-              {successMessage && (
-                <div className="text-darkbrown">{successMessage}</div>
-              )}
-              {errorMessage && (
-                <div className="text-lightbrown">{errorMessage}</div>
-              )}
+
               <Button
                 variant="secondary"
                 size="sm"
@@ -300,9 +341,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ onClose }) => {
                 className="hover:bg-darkbrown"
               >
                 {loading ? (
-                  <FaSpinner className="animate-spin mx-auto" />
+                  <FaSpinner className="animate-spin" />
                 ) : (
-                  "Save Changes"
+                  <span className="relative z-10">Save Changes</span>
                 )}
               </Button>
             </form>

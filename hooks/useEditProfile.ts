@@ -130,6 +130,8 @@ const useEditProfile = () => {
     handleLbsInputChange,
     handleGoalChange,
     handleMealChange,
+    formatHeight,
+    formatWeight,
   };
 };
 
