@@ -1,17 +1,25 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
+import { AppProps } from "next/app";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { AuthProvider } from "../../context/AuthContext";
+import { ReactNode } from "react";
 import "../styles/globals.css";
-import { AppProviders } from "../../context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const queryClient = new QueryClient();
+
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  const renderLayout =
+    (Component as any).privateLayout || ((page: ReactNode) => page);
+
   return (
-    <AppProviders>
-      <Component {...pageProps} />
-      <ToastContainer position="top-center" />
-    </AppProviders>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        {renderLayout(<Component {...pageProps} />)}
+        <ToastContainer position="top-center" />
+      </AuthProvider>
+    </QueryClientProvider>
   );
-}
+};
 
 export default MyApp;

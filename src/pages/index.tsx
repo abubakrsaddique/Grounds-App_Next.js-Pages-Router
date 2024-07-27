@@ -10,7 +10,7 @@ import InstantAccess from "../../public/instantaccess.svg";
 import Drawer from "../../components/banner/Drawer";
 import useModal from "../../hooks/useModal";
 import { Button } from "../../components/ui/Button";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 const Banner: React.FC = () => {
   const { isModalOpen, toggleModal } = useModal();
@@ -31,14 +31,12 @@ const Banner: React.FC = () => {
         muted
         loop
         playsInline
-      >
-        {/* <source src="/banner.mp4" type="video/mp4" /> */}
-      </video>
+      />
       <Image
         src={VideoSvg}
         alt="Play Video"
         onClick={toggleModal}
-        className="absolute left-[50%] top-[45%]  tab:mt-[25%] z-10 h-auto w-[100px] translate-x-[-50%] translate-y-[-50%] cursor-pointer transition-transform hover:scale-110"
+        className="absolute left-[50%] top-[45%] tab:mt-[25%] z-10 h-auto w-[100px] translate-x-[-50%] translate-y-[-50%] cursor-pointer transition-transform hover:scale-110"
       />
       {/* Main Screen */}
       <div className="relative top-0 h-full w-full px-28">
@@ -81,7 +79,9 @@ const Banner: React.FC = () => {
           </div>
           {user ? (
             <Link href="/dashboard">
-              <Button variant="default">Dashboard</Button>
+              <Button variant="default" className="px-14">
+                Dashboard
+              </Button>
             </Link>
           ) : (
             <Link href="/login">

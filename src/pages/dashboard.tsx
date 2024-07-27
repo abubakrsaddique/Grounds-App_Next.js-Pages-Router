@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { NextPage } from "next";
+import React, { ReactNode, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "react-query";
@@ -19,6 +20,7 @@ import { firestore, auth } from "../../Firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import { useAuth } from "../../hooks/useAuth";
+import PrivateLayout from "../../components/layouts/private/PrivateLayout";
 
 const fetchProfileData = async (uid: string) => {
   const userDocRef = doc(firestore, `users/${uid}`);
@@ -29,7 +31,7 @@ const fetchProfileData = async (uid: string) => {
   throw new Error("Profile data not found");
 };
 
-const Dashboard: React.FC = () => {
+const Dashboard: NextPage = () => {
   const {
     isModalOpen,
     modalType,
@@ -47,7 +49,6 @@ const Dashboard: React.FC = () => {
   const {
     data: profileData,
     refetch,
-    // isFetching,
     isError,
   } = useQuery(
     ["profileData", user?.uid],
@@ -84,7 +85,6 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  // if (isFetching) return <p>Loading...</p>;
   if (isError) return <p>Error fetching profile data.</p>;
 
   return (
@@ -204,3 +204,7 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+
+Dashboard.privateLayout = function (page: ReactNode) {
+  return <PrivateLayout>{page}</PrivateLayout>;
+};

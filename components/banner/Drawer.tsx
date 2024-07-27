@@ -10,6 +10,8 @@ import Apple from "../../public/apple.svg";
 import PlayStore from "../../public/playstore.svg";
 import useModal from "../../hooks/useModal";
 import Link from "next/link";
+import { useAuth } from "../../hooks/useAuth";
+import { Button } from "../ui/Button";
 
 interface DrawerProps {
   menuOpen: boolean;
@@ -18,6 +20,7 @@ interface DrawerProps {
 
 const Drawer: React.FC<DrawerProps> = ({ menuOpen, toggleMenu }) => {
   const { toggleModal } = useModal();
+  const { data: user } = useAuth();
 
   const handleMenuToggle = () => {
     toggleModal();
@@ -71,13 +74,19 @@ const Drawer: React.FC<DrawerProps> = ({ menuOpen, toggleMenu }) => {
               </span>
             </div>
 
-            <Link href="/checkout">
-              {" "}
-              <div className="mt-12 flex h-[56px] w-full items-center text-primary justify-center rounded-3xl bg-darkbrown text-xl font-bold leading-6">
-                Get Started
-              </div>
-            </Link>
-
+            {user ? (
+              <Link href="/dashboard">
+                <Button variant="default" size="sm">
+                  Dashboard
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/login">
+                <Button variant="default" size="sm">
+                  Get Started
+                </Button>
+              </Link>
+            )}
             <p className="mt-4 text-center text-base font-normal text-lightbrown leading-5 ">
               Already have an account?{" "}
               <Link href="/login">

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
+import { FaSpinner } from "react-icons/fa";
 import { auth, firestore } from "../../Firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
@@ -53,11 +54,11 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
-  const { mutate } = useMutation(() => loginUser(email, password), {
+  const { mutate, isLoading } = useMutation(() => loginUser(email, password), {
     onSuccess: (data: UserData) => {
       router.push({
         pathname: "/dashboard",
-        query: { firstName: data.firstName, email: data.email },
+        // query: { firstName: data.firstName, email: data.email },
       });
       toast.success("Login successful!");
     },
@@ -109,7 +110,11 @@ const Login = () => {
               </p>
 
               <Button variant="secondary" size="sm" className="mt-4">
-                Login
+                {isLoading ? (
+                  <FaSpinner className="animate-spin" />
+                ) : (
+                  <span className="relative z-10">Login</span>
+                )}
               </Button>
             </form>
           </div>

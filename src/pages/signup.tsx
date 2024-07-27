@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { auth, firestore } from "../../Firebase";
 import Link from "next/link";
 import Image from "next/image";
+import { FaSpinner } from "react-icons/fa";
 import { Button } from "../../components/ui/Button";
 import BackArrow from "../../public/backarrow.svg";
 import Apple from "../../public/apple.svg";
@@ -71,16 +72,16 @@ const Signup: React.FC = () => {
 
   const router = useRouter();
 
-  const { mutate } = useMutation(saveFormData, {
+  const { mutate, isLoading } = useMutation(saveFormData, {
     onSuccess: (data) => {
       if (data) {
         toast.success("User signed up successfully!");
         router.push({
           pathname: "/dashboard",
-          query: {
-            firstName: data.firstName,
-            email: data.email,
-          },
+          // query: {
+          //   firstName: data.firstName,
+          //   email: data.email,
+          // },
         });
       } else {
         toast.error("Signup failed. Please try again.");
@@ -269,7 +270,13 @@ const Signup: React.FC = () => {
                         size="lg"
                         className="bg-lightgreen hover:bg-brown transition-colors duration-500 mt-0 "
                       >
-                        Start Your Journey
+                        {isLoading ? (
+                          <FaSpinner className="animate-spin" />
+                        ) : (
+                          <span className="relative z-10">
+                            Start Your Journey
+                          </span>
+                        )}
                       </Button>
                     </form>
                   </div>
