@@ -145,7 +145,7 @@ const Dashboard: React.FC = () => {
               )}
 
               <p className="text-xl font-semibold leading-7 text-brown">
-                Welcome , {firstName}
+                Welcome , {profileData?.firstName}
               </p>
             </div>
             <div className="flex flex-col justify-center">
@@ -169,7 +169,7 @@ const Dashboard: React.FC = () => {
           {/* Left side */}
           <div className="w-[50%] flex flex-shrink-0 flex-col mob:w-full tab:w-full">
             <Account
-              email={email as string}
+              email={profileData?.email as string}
               onEdit={() => openModal("account")}
             />
             {isModalOpen && modalType === "account" && (
