@@ -11,19 +11,26 @@ const PrivateRoutes: React.FC<PrivateRoutesProps> = ({ children }) => {
   const { user, loading } = useAuthContext();
 
   useEffect(() => {
-    if (!loading) {
-      if (!user) {
-        router.replace("/login");
-      } else if (
-        router.pathname === "/login" ||
-        router.pathname === "/signup"
-      ) {
-        router.replace("/dashboard");
+    const handleRouteChange = (url: string) => {
+      if (!loading) {
+        if (!user && url !== "/login" && url !== "/signup") {
+          router.push("/login");
+        } else if (user && (url === "/login" || url === "/signup")) {
+          router.push("/dashboard");
+        }
       }
-    }
+    };
+
+    handleRouteChange(router.pathname);
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
   }, [loading, user, router]);
 
-  if (loading || !user) {
+  if (loading) {
     return <p>Loading...</p>;
   }
 
