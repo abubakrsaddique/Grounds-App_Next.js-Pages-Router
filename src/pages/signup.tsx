@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
 import { auth, firestore } from "../../Firebase";
@@ -14,6 +14,7 @@ import StartUpImage1 from "../../public/startup1.svg";
 import StartUpImage2 from "../../public/startup2.svg";
 import StartUpImage3 from "../../public/startup3.svg";
 import { toast } from "react-toastify";
+import PublicLayout from "../../components/layouts/public/PublicLayout";
 
 interface FormData {
   firstName: string;
@@ -52,7 +53,7 @@ const saveFormData = async (data: FormData) => {
   } catch (error) {}
 };
 
-const Signup: React.FC = () => {
+const Signup = () => {
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -372,3 +373,7 @@ const Signup: React.FC = () => {
 };
 
 export default Signup;
+
+Signup.publicLayout = function (page: ReactNode) {
+  return <PublicLayout>{page}</PublicLayout>;
+};

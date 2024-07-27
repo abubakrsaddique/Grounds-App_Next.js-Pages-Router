@@ -15,7 +15,10 @@ const PrivateRoutes: React.FC<PrivateRoutesProps> = ({ children }) => {
       if (!loading) {
         if (!user && url !== "/login" && url !== "/signup") {
           router.push("/login");
-        } else if (user && (url === "/login" || url === "/signup")) {
+        } else if (
+          user &&
+          (url === "/login" || url === "/signup" || url === "/checkout")
+        ) {
           router.push("/dashboard");
         }
       }

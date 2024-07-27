@@ -9,6 +9,8 @@ import InstantAccess from "../../public/instantaccess.svg";
 import CheckoutCards from "../../components/cards/Checkoutcards";
 import Trainercard from "../../components/cards/Trainercard";
 import { Button } from "../../components/ui/Button";
+import PublicLayout from "../../components/layouts/public/PublicLayout";
+import { ReactNode } from "react";
 
 const Checkout = () => {
   return (
@@ -149,3 +151,7 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+Checkout.publicLayout = function (page: ReactNode) {
+  return <PublicLayout>{page}</PublicLayout>;
+};

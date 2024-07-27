@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
 import { FaSpinner } from "react-icons/fa";
@@ -13,6 +13,7 @@ import Apple from "../../public/apple.svg";
 import PlayStore from "../../public/playstore.svg";
 import { Button } from "../../components/ui/Button";
 import { doc, getDoc } from "firebase/firestore";
+import PublicLayout from "../../components/layouts/public/PublicLayout";
 
 export interface UserData {
   uid: string;
@@ -178,3 +179,7 @@ const Login = () => {
 };
 
 export default Login;
+
+Login.publicLayout = function (page: ReactNode) {
+  return <PublicLayout>{page}</PublicLayout>;
+};
