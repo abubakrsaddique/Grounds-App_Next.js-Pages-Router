@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { AuthProvider } from "../../../context/AuthContext";
 import PrivateRoutes from "./PrivateRoutes";
 
 interface PrivateLayoutProps {
@@ -8,9 +7,9 @@ interface PrivateLayoutProps {
 
 const PrivateLayout: React.FC<PrivateLayoutProps> = ({ children }) => {
   return (
-    <AuthProvider>
+    <>
       <PrivateRoutes>{children}</PrivateRoutes>
-    </AuthProvider>
+    </>
   );
 };
 

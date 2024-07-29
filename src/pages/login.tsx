@@ -4,16 +4,18 @@ import { ReactNode, useState } from "react";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
 import { FaSpinner } from "react-icons/fa";
-import { auth, firestore } from "../../Firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import BackArrow from "../../public/backarrow.svg";
-import Apple from "../../public/apple.svg";
-import PlayStore from "../../public/playstore.svg";
-import { Button } from "../../components/ui/Button";
+
 import { doc, getDoc } from "firebase/firestore";
-import PublicLayout from "../../components/layouts/public/PublicLayout";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import PublicLayout from "@/components/layouts/public/PublicLayout";
+import BackArrow from "@/public/backarrow.svg";
+import Apple from "@/public/apple.svg";
+import PlayStore from "@/public/playstore.svg";
+import { Button } from "@/components/ui/Button";
+
+import { auth, firestore } from "../../Firebase";
 
 export interface UserData {
   uid: string;

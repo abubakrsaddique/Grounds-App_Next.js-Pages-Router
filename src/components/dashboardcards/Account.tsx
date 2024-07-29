@@ -1,4 +1,7 @@
 import React from "react";
+import Image from "next/image";
+
+import EditButton from "@/public/edit.svg";
 
 interface AccountProps {
   email: string;
@@ -10,8 +13,8 @@ const Account: React.FC<AccountProps> = ({ email, onEdit }) => {
     <div>
       <div className="flex items-center justify-between">
         <h2 className="pl-1 text-2xl font-semibold leading-6">My Account</h2>
-        <img
-          src="/edit.svg"
+        <Image
+          src={EditButton}
           alt="Edit"
           className="cursor-pointer"
           onClick={onEdit}

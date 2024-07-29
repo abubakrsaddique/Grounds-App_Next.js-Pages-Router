@@ -1,16 +1,18 @@
 import Link from "next/link";
-import Image1 from "../../public/login.webp";
-import Image from "next/image";
-import SignUpImage1 from "../../public/signup1.svg";
-import BackArrow from "../../public/backarrow.svg";
-import Apple from "../../public/apple.svg";
-import PlayStore from "../../public/playstore.svg";
-import InstantAccess from "../../public/instantaccess.svg";
-import CheckoutCards from "../../components/cards/Checkoutcards";
-import Trainercard from "../../components/cards/Trainercard";
-import { Button } from "../../components/ui/Button";
-import PublicLayout from "../../components/layouts/public/PublicLayout";
 import { ReactNode } from "react";
+import Image from "next/image";
+
+import PublicLayout from "@/components/layouts/public/PublicLayout";
+import CheckoutCards from "@/components/cards/Checkoutcards";
+import Trainercard from "@/components/cards/Trainercard";
+import { Button } from "@/components/ui/Button";
+
+import Image1 from "@/public/login.webp";
+import SignUpImage1 from "@/public/signup1.svg";
+import BackArrow from "@/public/backarrow.svg";
+import Apple from "@/public/apple.svg";
+import PlayStore from "@/public/playstore.svg";
+import InstantAccess from "@/public/instantaccess.svg";
 
 const Checkout = () => {
   return (

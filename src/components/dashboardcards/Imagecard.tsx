@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 import Image from "next/image";
-import Close from "../../public/close.png";
-import PIImage from "../../public/piimage.svg";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { storage, firestore } from "../../Firebase";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { useAuth } from "@/context/AuthContext";
+import Close from "@/public/close.png";
+import PIImage from "@/public/piimage.svg";
+
+import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage, firestore } from "../../../Firebase";
 
 interface ProfileImageProps {
   onClose: () => void;

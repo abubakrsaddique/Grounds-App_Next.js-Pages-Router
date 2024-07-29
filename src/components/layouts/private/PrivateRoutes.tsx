@@ -1,6 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useAuthContext } from "../../../context/AuthContext";
+
+import { useAuthContext } from "@/context/AuthContext";
 
 interface PrivateRoutesProps {
   children: ReactNode;

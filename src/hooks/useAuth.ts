@@ -1,7 +1,8 @@
 import { useQuery } from "react-query";
-import { auth } from "../Firebase";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+
+import { auth } from "../../Firebase";
 
 const fetchAuthUser = (): Promise<firebase.User | null> => {
   return new Promise((resolve) => {

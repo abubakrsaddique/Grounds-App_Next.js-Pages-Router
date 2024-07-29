@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import EditButton from "../../public/edit.svg";
-import ProfileCard from "./Profilecard";
+
+import EditButton from "@/public/edit.svg";
+import ProfileCard from "@/components/dashboardcards/Profilecard";
 
 interface ProfileProps {
   age: number;

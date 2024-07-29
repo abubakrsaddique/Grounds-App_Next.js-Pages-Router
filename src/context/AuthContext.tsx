@@ -6,7 +6,7 @@ import React, {
   useContext,
 } from "react";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { auth } from "../Firebase";
+import { auth } from "../../Firebase";
 import firebase from "firebase/compat/app";
 
 interface AuthContextProps {

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { FaSpinner } from "react-icons/fa";
-import Close from "../../public/videomodalclose.svg";
-import useEditProfile from "../../hooks/useEditProfile";
-import Image from "next/image";
-import { Button } from "../ui/Button";
-import { useMutation } from "react-query";
-import { doc, setDoc, getDoc } from "firebase/firestore";
-import { firestore } from "../../Firebase";
-import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
+import { useMutation } from "react-query";
 import "react-toastify/dist/ReactToastify.css";
+import { FaSpinner } from "react-icons/fa";
+import Image from "next/image";
+
+import { Button } from "@/components/ui/Button";
+
+import Close from "@/public/videomodalclose.svg";
+import useEditProfile from "../../hooks/useEditProfile";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { firestore } from "../../../Firebase";
+import { useAuth } from "../../context/AuthContext";
 
 interface ProfileCardProps {
   onClose: () => void;

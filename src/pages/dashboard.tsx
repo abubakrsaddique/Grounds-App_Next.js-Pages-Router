@@ -2,25 +2,28 @@ import { NextPage } from "next";
 import React, { ReactNode, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useQuery } from "react-query";
-import AddImage from "../../public/addimage.webp";
-import AddButton from "../../public/add.svg";
-import Apple from "../../public/apple.svg";
-import PlayStore from "../../public/playstore.svg";
-import Account from "../../components/dashboardcards/Account";
-import Profile from "../../components/dashboardcards/Profile";
-import Plan from "../../components/dashboardcards/Plan";
-import AccountCard from "../../components/dashboardcards/Accountcard";
-import ProfileCard from "../../components/dashboardcards/Profilecard";
-import ImageCard from "../../components/dashboardcards/Imagecard";
-import useModal from "../../hooks/useModal";
-import Payment from "../../components/dashboardcards/Payment";
-import { useRouter } from "next/router";
-import { firestore, auth } from "../../Firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
-import { useAuth } from "../../hooks/useAuth";
-import PrivateLayout from "../../components/layouts/private/PrivateLayout";
+import { useQuery } from "react-query";
+import { useRouter } from "next/router";
+
+import useModal from "@/hooks/useModal";
+import Payment from "@/components/dashboardcards/Payment";
+import Account from "@/components/dashboardcards/Account";
+import Profile from "@/components/dashboardcards/Profile";
+import Plan from "@/components/dashboardcards/Plan";
+import AccountCard from "@/components/dashboardcards/Accountcard";
+import ProfileCard from "@/components/dashboardcards/Profilecard";
+import ImageCard from "@/components/dashboardcards/Imagecard";
+import PrivateLayout from "@/components/layouts/private/PrivateLayout";
+
+import AddImage from "@/public/addimage.webp";
+import AddButton from "@/public/add.svg";
+import Apple from "@/public/apple.svg";
+import PlayStore from "@/public/playstore.svg";
+
+import { firestore, auth } from "../../Firebase";
+import { useAuth } from "../hooks/useAuth";
 
 const fetchProfileData = async (uid: string) => {
   const userDocRef = doc(firestore, `users/${uid}`);
@@ -42,7 +45,6 @@ const Dashboard: NextPage = () => {
     closeImageCard,
   } = useModal();
   const router = useRouter();
-  const { firstName, email, password } = router.query;
 
   const { data: user, refetch: refetchUser } = useAuth();
 
@@ -60,11 +62,11 @@ const Dashboard: NextPage = () => {
     }
   );
 
-  useEffect(() => {
-    if (user) {
-      refetch();
-    }
-  }, [user, refetch]);
+  // useEffect(() => {
+  //   if (user) {
+  //     refetch();
+  //   }
+  // }, [user, refetch]);
 
   useEffect(() => {
     if (!user) {

@@ -1,5 +1,6 @@
 import { FC } from "react";
-import useModal from "../../hooks/useModal";
+
+import useModal from "@/hooks/useModal";
 
 const Trainercard: FC = () => {
   const { isModalOpen, toggleModal, selectedTrainer, handleTrainerSelect } =

@@ -1,20 +1,22 @@
 import React, { ReactNode, useState } from "react";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
-import { auth, firestore } from "../../Firebase";
 import Link from "next/link";
 import Image from "next/image";
 import { FaSpinner } from "react-icons/fa";
-import { Button } from "../../components/ui/Button";
-import BackArrow from "../../public/backarrow.svg";
-import Apple from "../../public/apple.svg";
-import PlayStore from "../../public/playstore.svg";
-import InstantAccess from "../../public/instantaccess.svg";
-import StartUpImage1 from "../../public/startup1.svg";
-import StartUpImage2 from "../../public/startup2.svg";
-import StartUpImage3 from "../../public/startup3.svg";
 import { toast } from "react-toastify";
-import PublicLayout from "../../components/layouts/public/PublicLayout";
+
+import PublicLayout from "@/components/layouts/public/PublicLayout";
+import { Button } from "@/components/ui/Button";
+import BackArrow from "@/public/backarrow.svg";
+import Apple from "@/public/apple.svg";
+import PlayStore from "@/public/playstore.svg";
+import InstantAccess from "@/public/instantaccess.svg";
+import StartUpImage1 from "@/public/startup1.svg";
+import StartUpImage2 from "@/public/startup2.svg";
+import StartUpImage3 from "@/public/startup3.svg";
+
+import { auth, firestore } from "../../Firebase";
 
 interface FormData {
   firstName: string;

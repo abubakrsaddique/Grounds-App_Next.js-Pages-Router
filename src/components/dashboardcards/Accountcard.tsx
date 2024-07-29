@@ -1,9 +1,10 @@
 import React from "react";
 import { FaSpinner } from "react-icons/fa";
 import Image from "next/image";
-import Close from "../../public/videomodalclose.svg";
-import useMyAccount from "../../hooks/useMyAccount";
-import { Button } from "../ui/Button";
+
+import Close from "@/public/videomodalclose.svg";
+import useMyAccount from "@/hooks/useMyAccount";
+import { Button } from "@/components/ui/Button";
 
 interface AccountcardProps {
   onClose: () => void;

@@ -1,5 +1,6 @@
 import Image from "next/image";
-import PaymentImage from "../../public/payment.svg";
+
+import PaymentImage from "@/public/payment.svg";
 
 const Payment = () => {
   return (

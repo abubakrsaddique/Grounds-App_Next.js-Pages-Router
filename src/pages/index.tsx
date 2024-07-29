@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import BannerImage1 from "../../public/banner1.svg";
-import Close from "../../public/close.png";
-import VideoSvg from "../../public/video.svg";
-import BannerImage2 from "../../public/banner2.svg";
-import Arrow from "../../public/arrow.svg";
-import InstantAccess from "../../public/instantaccess.svg";
-import Drawer from "../../components/banner/Drawer";
-import useModal from "../../hooks/useModal";
-import { Button } from "../../components/ui/Button";
-import { useAuth } from "../../hooks/useAuth";
+
+import Drawer from "@/components/banner/Drawer";
+import useModal from "@/hooks/useModal";
+import { Button } from "@/components/ui/Button";
+import { useAuth } from "@/hooks/useAuth";
+
+import BannerImage1 from "@/public/banner1.svg";
+import Close from "@/public/close.png";
+import VideoSvg from "@/public/video.svg";
+import BannerImage2 from "@/public/banner2.svg";
+import Arrow from "@/public/arrow.svg";
+import InstantAccess from "@/public/instantaccess.svg";
 
 const Banner: React.FC = () => {
   const { isModalOpen, toggleModal } = useModal();

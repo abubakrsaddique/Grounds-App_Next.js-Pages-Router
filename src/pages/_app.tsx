@@ -1,12 +1,14 @@
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { AuthProvider } from "../../context/AuthContext";
-import PrivateLayout from "../../components/layouts/private/PrivateLayout";
-import PublicLayout from "../../components/layouts/public/PublicRoutes";
-import "../styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { AuthProvider } from "@/context/AuthContext";
+import PrivateLayout from "@/components/layouts/private/PrivateLayout";
+import PublicLayout from "@/components/layouts/public/PublicRoutes";
+
+import "../styles/globals.css";
 
 const queryClient = new QueryClient();
 

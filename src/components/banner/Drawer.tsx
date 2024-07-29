@@ -1,17 +1,18 @@
 import React from "react";
 import Image from "next/image";
-import Close from "../../public/close.png";
-import MobileIcon from "../../public/mobileicon.svg";
-import Instagram from "../../public/insta.svg";
-import Facebook from "../../public/fb.svg";
-import Youtube from "../../public/yt.svg";
-import Dot from "../../public/dot.svg";
-import Apple from "../../public/apple.svg";
-import PlayStore from "../../public/playstore.svg";
-import useModal from "../../hooks/useModal";
 import Link from "next/link";
-import { useAuth } from "../../hooks/useAuth";
-import { Button } from "../ui/Button";
+
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/Button";
+import useModal from "@/hooks/useModal";
+import Close from "@/public/close.png";
+import MobileIcon from "@/public/mobileicon.svg";
+import Instagram from "@/public/insta.svg";
+import Facebook from "@/public/fb.svg";
+import Youtube from "@/public/yt.svg";
+import Dot from "@/public/dot.svg";
+import Apple from "@/public/apple.svg";
+import PlayStore from "@/public/playstore.svg";
 
 interface DrawerProps {
   menuOpen: boolean;

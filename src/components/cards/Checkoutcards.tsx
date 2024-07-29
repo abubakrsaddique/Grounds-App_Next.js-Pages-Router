@@ -1,17 +1,18 @@
 import { useState } from "react";
 import Image from "next/image";
-import Image1 from "../../public/image1.webp";
-import Image2 from "../../public/image2.webp";
-import Image3 from "../../public/image3.webp";
-import Image4 from "../../public/image4.webp";
-import Image5 from "../../public/image5.webp";
-import Image6 from "../../public/image6.webp";
-import Image7 from "../../public/image7.webp";
-import Image8 from "../../public/image8.webp";
-import Image9 from "../../public/image9.webp";
-import Image10 from "../../public/image10.webp";
-import Image11 from "../../public/image11.webp";
-import Design from "../../public/design.svg";
+
+import Image1 from "@/public/image1.webp";
+import Image2 from "@/public/image2.webp";
+import Image3 from "@/public/image3.webp";
+import Image4 from "@/public/image4.webp";
+import Image5 from "@/public/image5.webp";
+import Image6 from "@/public/image6.webp";
+import Image7 from "@/public/image7.webp";
+import Image8 from "@/public/image8.webp";
+import Image9 from "@/public/image9.webp";
+import Image10 from "@/public/image10.webp";
+import Image11 from "@/public/image11.webp";
+import Design from "@/public/design.svg";
 
 const images = [
   Image1,
