@@ -42,7 +42,7 @@ const Dashboard: NextPage = () => {
     closeImageCard,
   } = useModal();
   const router = useRouter();
-  const { firstName, email } = router.query;
+  const { firstName, email, password } = router.query;
 
   const { data: user, refetch: refetchUser } = useAuth();
 

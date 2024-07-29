@@ -26,9 +26,7 @@ const Account: React.FC<AccountProps> = ({ email, onEdit }) => {
         <div className="border-t border-gray my-4"></div>
         <div className="flex items-center justify-between">
           <p className="text-base font-semibold">Password</p>
-          <p className="text-base font-semibold text-lightbrown">
-            ••••••••••••••
-          </p>
+          <p className="text-base font-semibold text-lightbrown">•••••••••</p>
         </div>
       </div>
     </div>
