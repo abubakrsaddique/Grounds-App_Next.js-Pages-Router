@@ -9,6 +9,8 @@ The repo provide a complete detail about this project. I have created this proje
 
 ## Preview
 
+https://github.com/user-attachments/assets/9bb10fdc-c1b7-48ad-bb00-242ccb07bf85
+
 ## Features
 
 - Setting up a Firebase
