@@ -6,14 +6,14 @@ interface PublicRoutesProps {
   children: ReactNode;
 }
 
-function PublicRoutes({ children }: PublicRoutesProps) {
+const PublicRoutes: React.FC<PublicRoutesProps> = ({ children }) => {
   const router = useRouter();
   const { user, loading } = useAuthContext();
 
   useEffect(() => {
     if (!loading && user) {
-      const publicRoutes = ["/login", "/signup", "/checkout"];
-      if (publicRoutes.includes(router.pathname)) {
+      const restrictedRoutes = ["/login", "/signup"];
+      if (restrictedRoutes.includes(router.pathname)) {
         router.push("/dashboard");
       }
     }
@@ -27,7 +27,7 @@ function PublicRoutes({ children }: PublicRoutesProps) {
     );
   }
 
-  return <>{!user && children}</>;
-}
+  return <>{children}</>;
+};
 
 export default PublicRoutes;

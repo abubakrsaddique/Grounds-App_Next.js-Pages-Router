@@ -13,13 +13,9 @@ const PrivateRoutes: React.FC<PrivateRoutesProps> = ({ children }) => {
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       if (!loading) {
-        if (!user && url !== "/login" && url !== "/signup") {
+        const authRoutes = ["/dashboard"];
+        if (!user && authRoutes.includes(url)) {
           router.push("/login");
-        } else if (
-          user &&
-          (url === "/login" || url === "/signup" || url === "/checkout")
-        ) {
-          router.push("/dashboard");
         }
       }
     };
