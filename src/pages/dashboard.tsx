@@ -16,6 +16,7 @@ import AccountCard from "@/components/dashboardcards/Accountcard";
 import ProfileCard from "@/components/dashboardcards/Profilecard";
 import ImageCard from "@/components/dashboardcards/Imagecard";
 import PrivateLayout from "@/components/layouts/private/PrivateLayout";
+import { fetchProfileData } from "@/libs/firebase/user";
 
 import AddImage from "@/public/addimage.webp";
 import AddButton from "@/public/add.svg";
@@ -23,16 +24,7 @@ import Apple from "@/public/apple.svg";
 import PlayStore from "@/public/playstore.svg";
 
 import { firestore, auth } from "../../Firebase";
-import { useAuth } from "../hooks/useAuth";
-
-const fetchProfileData = async (uid: string) => {
-  const userDocRef = doc(firestore, `users/${uid}`);
-  const docSnap = await getDoc(userDocRef);
-  if (docSnap.exists()) {
-    return docSnap.data();
-  }
-  throw new Error("Profile data not found");
-};
+import { useAuth } from "@/hooks/useAuth";
 
 const Dashboard: NextPage = () => {
   const {
@@ -46,7 +38,7 @@ const Dashboard: NextPage = () => {
   } = useModal();
   const router = useRouter();
 
-  const { data: user, refetch: refetchUser } = useAuth();
+  const { data: user } = useAuth();
 
   const {
     data: profileData,
@@ -54,25 +46,12 @@ const Dashboard: NextPage = () => {
     isError,
   } = useQuery(
     ["profileData", user?.uid],
-    () =>
-      user?.uid ? fetchProfileData(user.uid) : Promise.reject("No user UID"),
+    () => (user?.uid ? fetchProfileData() : Promise.reject("No user UID")),
     {
       enabled: !!user,
       refetchOnWindowFocus: false,
     }
   );
-
-  // useEffect(() => {
-  //   if (user) {
-  //     refetch();
-  //   }
-  // }, [user, refetch]);
-
-  useEffect(() => {
-    if (!user) {
-      refetchUser();
-    }
-  }, [user, refetchUser]);
 
   const handleImageUpdate = () => {
     refetch();

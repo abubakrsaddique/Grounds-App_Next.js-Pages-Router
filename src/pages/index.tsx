@@ -28,7 +28,7 @@ const Banner: React.FC = () => {
     <div className="relative h-full min-h-screen w-full bg-gray py-10">
       <video
         className="absolute top-0 h-full w-full object-cover mob:h-[70vh] tab:h-[72vh] rounded-b-3xl"
-        src="/banner.mp4"
+        src="https://firebasestorage.googleapis.com/v0/b/grounds-4c8d1.appspot.com/o/grounds-web%2FWebsite%20Horizontal%20Action%20Shots%20Final%20COMPRESSED%20(no%20sound).mp4?alt=media&token=7a15b1e2-207d-464c-a690-6b13c826853e"
         autoPlay
         muted
         loop

@@ -4,13 +4,14 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useAuth } from "@/context/AuthContext";
+// import { useAuth } from "@/hooks/useAuth";
 import Close from "@/public/close.png";
 import PIImage from "@/public/piimage.svg";
 
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage, firestore } from "../../../Firebase";
+import { useAuthContext } from "@/context/AuthContext";
 
 interface ProfileImageProps {
   onClose: () => void;
@@ -21,7 +22,8 @@ const ImageCard: React.FC<ProfileImageProps> = ({ onClose, onImageUpdate }) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const { data: user } = useAuth();
+  // const { data: user } = useAuth();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchCurrentImage = async () => {

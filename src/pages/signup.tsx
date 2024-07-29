@@ -48,7 +48,7 @@ const saveFormData = async (data: FormData) => {
         cvc: data.cvc,
       });
 
-      return { firstName: data.firstName, email: data.email };
+      return {};
     } else {
       throw new Error("User creation failed");
     }
@@ -81,17 +81,10 @@ const Signup = () => {
         toast.success("User signed up successfully!");
         router.push({
           pathname: "/dashboard",
-          // query: {
-          //   firstName: data.firstName,
-          //   email: data.email,
-          // },
         });
       } else {
         toast.error("Signup failed. Please try again.");
       }
-    },
-    onError: (error: Error) => {
-      toast.error(`Error saving form data: ${error.message}`);
     },
   });
 

@@ -61,7 +61,6 @@ const Login = () => {
     onSuccess: (data: UserData) => {
       router.push({
         pathname: "/dashboard",
-        // query: { firstName: data.firstName, email: data.email },
       });
       toast.success("Login successful!");
     },

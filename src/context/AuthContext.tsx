@@ -5,9 +5,11 @@ import React, {
   ReactNode,
   useContext,
 } from "react";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { auth } from "../../Firebase";
 import firebase from "firebase/compat/app";
+
+import { fetchUser } from "@/libs/firebase/user";
 
 interface AuthContextProps {
   user: firebase.User | null;
@@ -20,33 +22,23 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+const AuthContext = createContext<AuthContextProps | undefined>({
+  user: null,
+  loading: false,
+  isLoggedIn: false,
+  logout: () => {},
+});
 
-const fetchUser = async (): Promise<firebase.User | null> => {
-  return new Promise((resolve) => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
-        resolve(user);
-      } else {
-        localStorage.removeItem("user");
-        resolve(null);
-      }
-      unsubscribe();
-    });
-  });
-};
-
-export const useAuth = () => {
-  return useQuery("authUser", fetchUser, {
+const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const {
+    data: user,
+    isLoading,
+    refetch,
+  } = useQuery("authUser", fetchUser, {
     staleTime: Infinity,
     cacheTime: Infinity,
     retry: false,
   });
-};
-
-const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { data: user, isLoading, refetch } = useAuth();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -70,14 +62,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 
-const queryClient = new QueryClient();
-
 const AppProviders: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>{children}</AuthProvider>
-    </QueryClientProvider>
-  );
+  return <AuthProvider>{children}</AuthProvider>;
 };
 
 export const useAuthContext = () => {
