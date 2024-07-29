@@ -9,7 +9,7 @@ import { useQuery } from "react-query";
 import { auth } from "../../Firebase";
 import firebase from "firebase/compat/app";
 
-import { fetchUser } from "@/libs/firebase/user";
+import { fetchUser } from "@/libs/firebase/userAuth";
 
 interface AuthContextProps {
   user: firebase.User | null;

@@ -2,7 +2,6 @@ import { NextPage } from "next";
 import React, { ReactNode, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { doc, getDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
@@ -16,16 +15,16 @@ import AccountCard from "@/components/dashboardcards/Accountcard";
 import ProfileCard from "@/components/dashboardcards/Profilecard";
 import ImageCard from "@/components/dashboardcards/Imagecard";
 import PrivateLayout from "@/components/layouts/private/PrivateLayout";
-import { fetchProfileData } from "@/libs/firebase/user";
+import { fetchProfileData } from "@/libs/firebase/userAuth";
 
 import AddImage from "@/public/addimage.webp";
 import AddButton from "@/public/add.svg";
 import Apple from "@/public/apple.svg";
 import PlayStore from "@/public/playstore.svg";
 
-import { firestore, auth } from "../../Firebase";
-import { useAuth } from "@/hooks/useAuth";
+import { auth } from "../../Firebase";
 
+import { userAuth } from "@/libs/firebase/userAuth";
 const Dashboard: NextPage = () => {
   const {
     isModalOpen,
@@ -38,7 +37,7 @@ const Dashboard: NextPage = () => {
   } = useModal();
   const router = useRouter();
 
-  const { data: user } = useAuth();
+  const { data: user } = userAuth();
 
   const {
     data: profileData,

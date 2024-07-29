@@ -5,7 +5,7 @@ import Link from "next/link";
 import Drawer from "@/components/banner/Drawer";
 import useModal from "@/hooks/useModal";
 import { Button } from "@/components/ui/Button";
-import { useAuth } from "@/hooks/useAuth";
+import { userAuth } from "@/libs/firebase/userAuth";
 
 import BannerImage1 from "@/public/banner1.svg";
 import Close from "@/public/close.png";
@@ -17,7 +17,8 @@ import InstantAccess from "@/public/instantaccess.svg";
 const Banner: React.FC = () => {
   const { isModalOpen, toggleModal } = useModal();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const { data: user } = useAuth();
+
+  const { data: user } = userAuth();
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
