@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { AuthProvider, AppProviders } from "@/context/AuthContext";
+import { AuthProvider, AppProviders } from "@/context/AuthProvider";
 import PrivateLayout from "@/components/layouts/private/PrivateLayout";
 import PublicLayout from "@/components/layouts/public/PublicRoutes";
 
