@@ -8,7 +8,7 @@ interface AuthContextProps {
   logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextProps | undefined>({
+export const AuthContext = createContext<AuthContextProps | undefined>({
   user: null,
   loading: false,
   isLoggedIn: false,
@@ -22,5 +22,3 @@ export const useAuthContext = () => {
   }
   return context;
 };
-
-export { AuthContext };

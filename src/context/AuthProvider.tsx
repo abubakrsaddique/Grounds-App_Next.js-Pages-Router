@@ -1,23 +1,14 @@
 import React, { useEffect, useState, ReactNode } from "react";
-import { useQuery } from "react-query";
 import { auth } from "../../Firebase";
-import { fetchUser } from "@/libs/firebase/userAuth";
 import { AuthContext } from "./AuthContext";
+import { useAuthUser } from "@/libs/firebase/userAuth";
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
-const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const {
-    data: user,
-    isLoading,
-    refetch,
-  } = useQuery("authUser", fetchUser, {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    retry: false,
-  });
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const { data: user, isLoading, refetch } = useAuthUser();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,10 +30,4 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       {!loading && children}
     </AuthContext.Provider>
   );
-};
-
-export const AppProviders: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
-  return <AuthProvider>{children}</AuthProvider>;
 };

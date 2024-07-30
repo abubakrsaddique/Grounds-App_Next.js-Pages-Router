@@ -5,7 +5,7 @@ import Link from "next/link";
 import Drawer from "@/components/banner/Drawer";
 import useModal from "@/hooks/useModal";
 import { Button } from "@/components/ui/Button";
-import { userAuth } from "@/libs/firebase/userAuth";
+import { useAuthUser } from "@/libs/firebase/userAuth";
 
 import BannerImage1 from "@/public/banner1.svg";
 import Close from "@/public/close.png";
@@ -18,7 +18,7 @@ const Banner: React.FC = () => {
   const { isModalOpen, toggleModal } = useModal();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
-  const { data: user } = userAuth();
+  const { data: user } = useAuthUser();
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -105,15 +105,16 @@ const Banner: React.FC = () => {
                   <Image src={Close} alt="Close" className="w-[10%]" />
                 </button>
                 <div className="my-8 mx-16 mob:my-0 mob:mx-0 tab:mx-0 tab:my-0 mob:relative mob:z-[-1] tab:relative tab:z-[-1]">
-                  <iframe
-                    className="w-full h-[70vh] mob:h-screen tab:h-screen"
-                    src="https://www.youtube.com/embed/4hLgD_vPrgY?si=oXuBOH-PFV4HdmTW"
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  ></iframe>
+                  <div className="w-full h-[70vh] mob:h-screen tab:h-screen">
+                    <video
+                      className="absolute h-[70vh] w-full object-cover mob:h-[70vh] tab:h-[72vh] "
+                      src="https://firebasestorage.googleapis.com/v0/b/grounds-4c8d1.appspot.com/o/grounds-web%2FWebsite%20Horizontal%20Action%20Shots%20Final%20COMPRESSED%20(no%20sound).mp4?alt=media&token=7a15b1e2-207d-464c-a690-6b13c826853e"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  </div>
                 </div>
               </div>
             </div>

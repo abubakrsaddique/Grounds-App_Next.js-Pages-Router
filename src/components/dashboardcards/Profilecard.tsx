@@ -11,7 +11,6 @@ import Close from "@/public/videomodalclose.svg";
 import useEditProfile from "../../hooks/useEditProfile";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { firestore } from "../../../Firebase";
-// import { useAuth } from "@/hooks/useAuth";
 import { useAuthContext } from "@/context/AuthContext";
 
 interface ProfileCardProps {
@@ -58,7 +57,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     formatWeight,
   } = useEditProfile();
 
-  // const { data: user } = useAuth();
   const { user } = useAuthContext();
 
   const mutation = useMutation(

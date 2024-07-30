@@ -4,7 +4,6 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// import { useAuth } from "@/hooks/useAuth";
 import Close from "@/public/close.png";
 import PIImage from "@/public/piimage.svg";
 
@@ -22,7 +21,6 @@ const ImageCard: React.FC<ProfileImageProps> = ({ onClose, onImageUpdate }) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  // const { data: user } = useAuth();
   const { user } = useAuthContext();
 
   useEffect(() => {

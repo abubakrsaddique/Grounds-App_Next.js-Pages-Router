@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { AppProviders } from "@/context/AuthProvider";
+import { AuthProvider } from "@/context/AuthProvider";
 import PrivateLayout from "@/components/layouts/private/PrivateLayout";
 import PublicLayout from "@/components/layouts/public/PublicRoutes";
 
@@ -22,12 +22,12 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppProviders>
+      <AuthProvider>
         <Layout>
           <Component {...pageProps} />
         </Layout>
         <ToastContainer position="top-center" />
-      </AppProviders>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };

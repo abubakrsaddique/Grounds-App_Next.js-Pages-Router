@@ -12,7 +12,7 @@ import Youtube from "@/public/yt.svg";
 import Dot from "@/public/dot.svg";
 import Apple from "@/public/apple.svg";
 import PlayStore from "@/public/playstore.svg";
-import { userAuth } from "@/libs/firebase/userAuth";
+import { useAuthUser } from "@/libs/firebase/userAuth";
 
 interface DrawerProps {
   menuOpen: boolean;
@@ -21,7 +21,7 @@ interface DrawerProps {
 
 const Drawer: React.FC<DrawerProps> = ({ menuOpen, toggleMenu }) => {
   const { toggleModal } = useModal();
-  const { data: user } = userAuth();
+  const { data: user } = useAuthUser();
 
   const handleMenuToggle = () => {
     toggleModal();

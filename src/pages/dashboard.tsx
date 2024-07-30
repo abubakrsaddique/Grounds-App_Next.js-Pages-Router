@@ -15,7 +15,7 @@ import AccountCard from "@/components/dashboardcards/Accountcard";
 import ProfileCard from "@/components/dashboardcards/Profilecard";
 import ImageCard from "@/components/dashboardcards/Imagecard";
 import PrivateLayout from "@/components/layouts/private/PrivateLayout";
-import { fetchProfileData } from "@/libs/firebase/userAuth";
+import { fetchProfileData, useAuthUser } from "@/libs/firebase/userAuth";
 
 import AddImage from "@/public/addimage.webp";
 import AddButton from "@/public/add.svg";
@@ -24,7 +24,6 @@ import PlayStore from "@/public/playstore.svg";
 
 import { auth } from "../../Firebase";
 
-import { userAuth } from "@/libs/firebase/userAuth";
 const Dashboard: NextPage = () => {
   const {
     isModalOpen,
@@ -36,8 +35,7 @@ const Dashboard: NextPage = () => {
     closeImageCard,
   } = useModal();
   const router = useRouter();
-
-  const { data: user } = userAuth();
+  const { data: user } = useAuthUser();
 
   const {
     data: profileData,
