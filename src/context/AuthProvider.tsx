@@ -41,8 +41,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 
-const AppProviders: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AppProviders: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   return <AuthProvider>{children}</AuthProvider>;
 };
-
-export { AuthProvider, AppProviders };
