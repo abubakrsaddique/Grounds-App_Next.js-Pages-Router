@@ -1,7 +1,7 @@
 # Grounds
 
 I have cloned this Web-App Dashboard and make clone of this App for my practice.
-I have created this project Using Next.js and Tailwind CSS for efficient UI development
+I have created this project Using Next.js with Pages-Router and Tailwind CSS for efficient UI development
 
 ## Overview
 
@@ -13,6 +13,7 @@ https://github.com/user-attachments/assets/9bb10fdc-c1b7-48ad-bb00-242ccb07bf85
 
 ## Features
 
+- Using Next.js Pages Router
 - Setting up a Firebase
 - Creating Authentication Component
 - Handling User Sign-up & Login
